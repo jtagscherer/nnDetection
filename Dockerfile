@@ -32,7 +32,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -
  software-properties-common \
  gdb \
  ninja-build \
- openssh-server \
+ openssh-server
 
 # Enable password-based login via SSH
 RUN mkdir /var/run/sshd
