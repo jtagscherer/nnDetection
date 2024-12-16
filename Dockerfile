@@ -13,7 +13,7 @@
 #limitations under the License.
 
 # Contains pytorch, torchvision, cuda, cudnn
-FROM nvcr.io/nvidia/pytorch:21.11-py3
+FROM doduo1.umcn.nl/uokbaseimage/diag:tf2.12-pt2.0-v1
 
 ARG env_det_num_threads=6
 ARG env_det_verbose=1
@@ -34,19 +34,21 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -
  ninja-build
 
 # updating requests and urllib3 fixed compatibility with my docker version
-RUN pip install numpy \
-  && pip install --upgrade requests \
-  && pip install --upgrade urllib3
+RUN pip3 install --upgrade pip \
+  && pip3 install numpy \
+  && pip3 install --upgrade requests \
+  && pip3 install --upgrade urllib3 \
+  && pip3 install setuptools
 
 # Install own code
 COPY ./requirements.txt .
 RUN mkdir ${det_data} \
   && mkdir ${det_models} \
   && mkdir -p /opt/code/nndet \
-  && pip install -r requirements.txt  \
-  && pip install hydra-core --upgrade --pre \
-  && pip install git+https://github.com/mibaumgartner/pytorch_model_summary.git
+  && pip3 install -r requirements.txt  \
+  && pip3 install hydra-core --upgrade --pre \
+  && pip3 install git+https://github.com/mibaumgartner/pytorch_model_summary.git
 
 WORKDIR /opt/code/nndet
 COPY . .
-RUN FORCE_CUDA=1 pip install -v -e .
+# RUN FORCE_CUDA=1 pip3 install -v -e .
