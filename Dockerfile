@@ -31,7 +31,14 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -
  build-essential \
  software-properties-common \
  gdb \
- ninja-build
+ ninja-build \
+ openssh-server \
+
+# Enable password-based login via SSH
+RUN mkdir /var/run/sshd
+RUN echo 'root:passforroot' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 # updating requests and urllib3 fixed compatibility with my docker version
 RUN pip3 install --upgrade pip \
