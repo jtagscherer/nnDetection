@@ -31,13 +31,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -
  build-essential \
  software-properties-common \
  gdb \
- ninja-build \
- openssh-server
-
-# Enable password-based login via SSH
-RUN echo 'root:passforroot' | chpasswd
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+ ninja-build
 
 # updating requests and urllib3 fixed compatibility with my docker version
 RUN pip3 install --upgrade pip \
@@ -54,6 +48,8 @@ RUN mkdir ${det_data} \
   && pip3 install -r requirements.txt  \
   && pip3 install hydra-core --upgrade --pre \
   && pip3 install git+https://github.com/mibaumgartner/pytorch_model_summary.git
+
+COPY id_rsa.pub /root/.ssh/authorized_keys
 
 WORKDIR /opt/code/nndet
 COPY . .
