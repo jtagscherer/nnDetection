@@ -34,7 +34,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -
  ninja-build
 
 # Fix complation issue for CUDA
-RUN apt-get install gcc-9 && \
+RUN apt-get install -y gcc-9 && \
  update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9 && \
  update-alternatives --config gcc
 #RUN apt install -y gcc-10 g++-10 && \
