@@ -13,7 +13,8 @@
 #limitations under the License.
 
 # Contains pytorch, torchvision, cuda, cudnn
-FROM doduo1.umcn.nl/uokbaseimage/diag:tf2.12-pt2.0-v1
+# FROM doduo1.umcn.nl/uokbaseimage/diag:tf2.12-pt2.0-v1
+FROM nvcr.io/nvidia/pytorch:21.11-py3
 
 ARG env_det_num_threads=6
 ARG env_det_verbose=1
@@ -34,13 +35,13 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -
  ninja-build
 
 # Fix complation issue for CUDA
-RUN apt-get install -y gcc-9 && \
- update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9 && \
- update-alternatives --config gcc
+#RUN apt-get install -y gcc-9 && \
+# update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9 && \
+# update-alternatives --config gcc
 
-RUN apt-get install -y g++-9 && \
- update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9 && \
- update-alternatives --config g++
+#RUN apt-get install -y g++-9 && \
+# update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9 && \
+# update-alternatives --config g++
 #RUN apt install -y gcc-10 g++-10 && \
 # export CC=/usr/bin/gcc-10 && \
 # export CXX=/usr/bin/g++-10
@@ -69,4 +70,4 @@ COPY id_rsa.pub /root/.ssh/authorized_keys
 
 WORKDIR /opt/code/nndet
 COPY . .
-RUN FORCE_CUDA=1 pip3 install -v -e .
+#RUN FORCE_CUDA=1 pip3 install -v -e .
