@@ -36,7 +36,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -
 # Fix complation issue for CUDA
 RUN apt-get install -y gcc-9 && \
  update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9 && \
- update-alternatives --config gcc \
+ update-alternatives --config gcc
+
 RUN apt-get install -y g++-9 && \
  update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9 && \
  update-alternatives --config g++
