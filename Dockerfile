@@ -69,4 +69,4 @@ COPY id_rsa.pub /root/.ssh/authorized_keys
 
 WORKDIR /opt/code/nndet
 COPY . .
-# RUN FORCE_CUDA=1 pip3 install -v -e .
+RUN FORCE_CUDA=1 pip3 install -v -e .
