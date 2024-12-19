@@ -86,7 +86,10 @@ class Exporter:
                 continue
             image_target_dir = self.target_dir / img_dir.stem
             logger.info(f"Copy data from {img_dir} to {image_target_dir}")
+            _orig_copystat = shutil.copystat
+            shutil.copystat = lambda *a, **k: None
             shutil.copytree(img_dir, image_target_dir)
+            shutil.copystat = _orig_copystat
 
     def export_labels(self):
         """

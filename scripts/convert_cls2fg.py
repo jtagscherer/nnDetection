@@ -62,8 +62,11 @@ def convert_raw(task, overwrite, ov):
             continue
 
         # copy images and labels
+        _orig_copystat = shutil.copystat
+        shutil.copystat = lambda *a, **k: None
         shutil.copytree(source_image_dir, target_splitted_dir / f"images{postfix}")
         shutil.copytree(source_label_dir, target_splitted_dir / f"labels{postfix}")
+        shutil.copystat = _orig_copystat
 
         # remap properties file to foreground class
         target_label_dir = target_splitted_dir / f"labels{postfix}"
