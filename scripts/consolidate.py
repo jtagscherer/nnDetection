@@ -48,7 +48,7 @@ def consolidate_models(source_dirs: Sequence[Path], target_dir: Path, ckpt: str)
         assert len(found_models) == 1, f"Found wrong number of models, {found_models}"
         model_path = found_models[0]
         assert f"fold{fold}" in str(model_path.parent.stem), f"Expected fold {fold} but found {model_path}"
-        shutil.copy2(model_path, target_dir / f"model_fold{fold}.ckpt")
+        shutil.copy(model_path, target_dir / f"model_fold{fold}.ckpt")
 
 
 def consolidate_predictions(
@@ -166,8 +166,8 @@ def main():
         consolidate=consolidate,
         )
 
-    shutil.copy2(training_dirs[0] / "plan.pkl", target_dir)
-    shutil.copy2(training_dirs[0] / "config.yaml", target_dir)
+    shutil.copy(training_dirs[0] / "plan.pkl", target_dir)
+    shutil.copy(training_dirs[0] / "config.yaml", target_dir)
 
     # invoke new parameter sweeps
     cfg = OmegaConf.load(str(target_dir / "config.yaml"))
